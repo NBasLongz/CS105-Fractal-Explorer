@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fractal Explorer — CS105 WebGL</title>
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Main JS (Module) -->
+  <script type="module" src="js/main.js"></script>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 12 12">
+          <polyline points="1,6 3,3 5,6 7,3 9,6 11,3" />
+        </svg>
+      </div>
+      Fractal Explorer
+    </div>
+    <div class="topbar-div"></div>
+    <div class="topbar-pill">CS105 · WebGL</div>
+    <button class="back-btn" id="backBtn" onclick="goHome()">← Trang chủ</button>
+  </header>
+
+  <!-- ═══ HOME ═══ -->
+  <div id="home">
+    <div class="home-kicker">CS105 · Đồ Họa Máy Tính · Tiểu Luận Fractal</div>
+    <h1 class="home-h1">Trực quan hóa<br>Fractal với <mark>WebGL</mark></h1>
+    <p class="home-lead">6 mô hình fractal kinh điển — từ hình học CPU đệ quy đến GPU shader 500 vòng lặp, zoom sâu vô
+      tận.</p>
+
+    <div class="grid">
+      <div class="card" onclick="go('vankoch')">
+        <div class="card-top">
+          <div class="card-icon ic-b">❄️</div>
+          <div class="card-badge">01 / 06</div>
+        </div>
+        <div class="card-h">Von Koch Snowflake</div>
+        <div class="card-p">Bông tuyết đệ quy — mỗi cạnh được chia thành 4 đoạn mới. Chu vi vô hạn, diện tích hữu hạn.
+        </div>
+        <div class="card-foot">
+          <div class="card-spec">Level 0–12 · CPU</div>
+          <div class="card-cta">→</div>
+        </div>
+      </div>
+      <div class="card" onclick="go('minkowski')">
+        <div class="card-top">
+          <div class="card-icon ic-p">🏝️</div>
+          <div class="card-badge">02 / 06</div>
+        </div>
+        <div class="card-h">Minkowski Island</div>
+        <div class="card-p">Đường cong biên giới fractal hình vuông — mỗi đoạn biến thành 8 đoạn nhỏ hơn.</div>
+        <div class="card-foot">
+          <div class="card-spec">Level 0–7 · CPU</div>
+          <div class="card-cta">→</div>
+        </div>
+      </div>
+      <div class="card" onclick="go('sierpT')">
+        <div class="card-top">
+          <div class="card-icon ic-r">🔺</div>
+          <div class="card-badge">03 / 06</div>
+        </div>
+        <div class="card-h">Sierpinski Triangle</div>
+        <div class="card-p">Tam giác fractal tự tương đồng — bỏ tam giác giữa, đệ quy trên 3 tam giác góc.</div>
+        <div class="card-foot">
+          <div class="card-spec">Level 0–10 · CPU · 3ⁿ triangles</div>
+          <div class="card-cta">→</div>
+        </div>
+      </div>
+      <div class="card" onclick="go('sierpC')">
+        <div class="card-top">
+          <div class="card-icon ic-y">🟫</div>
+          <div class="card-badge">04 / 06</div>
+        </div>
+        <div class="card-h">Sierpinski Carpet</div>
+        <div class="card-p">Hình vuông fractal — chia 3×3, xóa trung tâm, đệ quy trên 8 ô còn lại.</div>
+        <div class="card-foot">
+          <div class="card-spec">Level 0–8 · CPU · 8ⁿ squares</div>
+          <div class="card-cta">→</div>
+        </div>
+      </div>
+      <div class="card" onclick="go('mandelbrot')">
+        <div class="card-top">
+          <div class="card-icon ic-g">🌀</div>
+          <div class="card-badge">05 / 06</div>
+        </div>
+        <div class="card-h">Mandelbrot Set</div>
+        <div class="card-p">Tập hợp phức nổi tiếng nhất. Zoom sâu bằng scroll — GPU tính 500 vòng lặp mỗi pixel.</div>
+        <div class="card-foot">
+          <div class="card-spec">500 iter · GPU Shader · Zoom/Pan</div>
+          <div class="card-cta">→</div>
+        </div>
+      </div>
+      <div class="card" onclick="go('julia')">
+        <div class="card-top">
+          <div class="card-icon ic-o">🎨</div>
+          <div class="card-badge">06 / 06</div>
+        </div>
+        <div class="card-h">Julia Set</div>
+        <div class="card-p">Tập Julia với hằng số c tùy chỉnh — 8 preset, 5 bảng màu, animation tự động.</div>
+        <div class="card-foot">
+          <div class="card-spec">500 iter · GPU Shader · Interactive</div>
+          <div class="card-cta">→</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-rule">
+      <div class="home-rule-l">Đồ Họa Máy Tính — Tiểu Luận Fractal</div>
+      <div class="members">
+        <div class="mbr"><b>Phạm Hồ Trúc Linh</b> · 22520777</div>
+        <div class="mbr"><b>Huỳnh Trung Nghĩa</b> · 22520945</div>
+        <div class="mbr"><b>Nguyễn Hồng Phát</b> · 22521702</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ VON KOCH ═══ -->
+  <div class="fp" id="vankoch">
+    <div class="fp-inner">
+      <div class="pg-kicker">01 / 06 · CPU Geometry</div>
+      <h2 class="pg-h">Von Koch Snowflake</h2>
+      <p class="pg-sub">Chu vi vô hạn — diện tích hữu hạn<br>Mỗi level nhân 4× số đoạn thẳng</p>
+      <div class="cw"><canvas id="vkC" width="560" height="560"></canvas>
+        <div class="c-badge" id="vkB">0 segments</div>
+      </div>
+      <div class="ctrl">
+        <button class="cbtn" onclick="vkCh(-1)">−</button>
+        <div class="clvl">
+          <div class="clvl-n" id="vkL">0</div>
+          <div class="clvl-l">Level / 12</div>
+        </div>
+        <button class="cbtn" onclick="vkCh(1)">+</button>
+      </div>
+      <div class="hint">Level 12 → ~3M đoạn · giảm nếu chậm</div>
+    </div>
+  </div>
+
+  <!-- ═══ MINKOWSKI ═══ -->
+  <div class="fp" id="minkowski">
+    <div class="fp-inner">
+      <div class="pg-kicker">02 / 06 · CPU Geometry</div>
+      <h2 class="pg-h">Minkowski Island</h2>
+      <p class="pg-sub">Mỗi đoạn thành 8 — chiều dài tăng 8× mỗi bước</p>
+      <div class="cw"><canvas id="mkC" width="560" height="560"></canvas>
+        <div class="c-badge" id="mkB">0 segments</div>
+      </div>
+      <div class="ctrl">
+        <button class="cbtn" onclick="mkCh(-1)">−</button>
+        <div class="clvl">
+          <div class="clvl-n" id="mkL">0</div>
+          <div class="clvl-l">Level / 7</div>
+        </div>
+        <button class="cbtn" onclick="mkCh(1)">+</button>
+      </div>
+      <div class="hint">Level 5+ cần vài giây để render</div>
+    </div>
+  </div>
+
+  <!-- ═══ SIERPINSKI T ═══ -->
+  <div class="fp" id="sierpT">
+    <div class="fp-inner">
+      <div class="pg-kicker">03 / 06 · CPU Geometry</div>
+      <h2 class="pg-h">Sierpinski Triangle</h2>
+      <p class="pg-sub">3ⁿ tam giác tại level n · diện tích → 0</p>
+      <div class="cw"><canvas id="stC" width="560" height="560"></canvas>
+        <div class="c-badge" id="stB">1 triangle</div>
+      </div>
+      <div class="ctrl">
+        <button class="cbtn" onclick="stCh(-1)">−</button>
+        <div class="clvl">
+          <div class="clvl-n" id="stL">0</div>
+          <div class="clvl-l">Level / 10</div>
+        </div>
+        <button class="cbtn" onclick="stCh(1)">+</button>
+      </div>
+      <div class="hint">Level 10 → 59,049 tam giác</div>
+    </div>
+  </div>
+
+  <!-- ═══ SIERPINSKI C ═══ -->
+  <div class="fp" id="sierpC">
+    <div class="fp-inner">
+      <div class="pg-kicker">04 / 06 · CPU Geometry</div>
+      <h2 class="pg-h">Sierpinski Carpet</h2>
+      <p class="pg-sub">8ⁿ ô tại level n · diện tích → 0</p>
+      <div class="cw"><canvas id="scC" width="560" height="560"></canvas>
+        <div class="c-badge" id="scB">1 square</div>
+      </div>
+      <div class="ctrl">
+        <button class="cbtn" onclick="scCh(-1)">−</button>
+        <div class="clvl">
+          <div class="clvl-n" id="scL">0</div>
+          <div class="clvl-l">Level / 8</div>
+        </div>
+        <button class="cbtn" onclick="scCh(1)">+</button>
+      </div>
+      <div class="hint">Level 8 → 16.7M ô · máy yếu dùng level ≤6</div>
+    </div>
+  </div>
+
+  <!-- ═══ MANDELBROT ═══ -->
+  <div class="fp" id="mandelbrot">
+    <div class="fp-inner">
+      <div class="pg-kicker">05 / 06 · GPU Shader · 500 Iterations/pixel</div>
+      <h2 class="pg-h">Mandelbrot Set</h2>
+      <p class="pg-sub">Scroll để zoom · Kéo để pan · Double-click reset về gốc</p>
+      <div class="cw"><canvas id="mbC" width="560" height="560"></canvas></div>
+      <div class="sbar">
+        <div class="stat">Zoom <b id="mbZ">1.00×</b></div>
+        <div class="stat">Re <b id="mbX">-0.500</b></div>
+        <div class="stat">Im <b id="mbY">0.000</b></div>
+        <div class="stat">Iter <b>500</b></div>
+      </div>
+      <div class="prow">
+        <span class="plbl">Màu</span>
+        <div class="pb on" style="background:conic-gradient(#7c3aed,#db2777,#2563eb,#7c3aed)" onclick="mbPal(0,this)">
+        </div>
+        <div class="pb" style="background:conic-gradient(#0369a1,#06b6d4,#fbbf24,#0369a1)" onclick="mbPal(1,this)">
+        </div>
+        <div class="pb" style="background:conic-gradient(#92400e,#ef4444,#fef3c7,#92400e)" onclick="mbPal(2,this)">
+        </div>
+        <div class="pb" style="background:conic-gradient(#14532d,#16a34a,#bbf7d0,#14532d)" onclick="mbPal(3,this)">
+        </div>
+        <div class="pb" style="background:conic-gradient(#111,#666,#eee,#111)" onclick="mbPal(4,this)"></div>
+      </div>
+      <div class="hint">← → ↑ ↓ pan · +/− zoom · scroll nhanh nhất</div>
+    </div>
+  </div>
+
+  <!-- ═══ JULIA ═══ -->
+  <div class="fp" id="julia">
+    <div class="fp-inner">
+      <div class="pg-kicker">06 / 06 · GPU Shader · 500 Iterations/pixel</div>
+      <h2 class="pg-h">Julia Set</h2>
+      <p class="pg-sub">Điều chỉnh hằng số c để thám hiểm không gian fractal</p>
+      <div class="cw"><canvas id="jlC" width="560" height="560"></canvas></div>
+      <div class="prow2">
+        <span class="plbl2">c = (</span>
+        <input class="pinput" type="number" id="jlRe" value="-0.7269" step="0.001" oninput="jlUpd()">
+        <span class="plbl2">+</span>
+        <input class="pinput" type="number" id="jlIm" value="0.1889" step="0.001" oninput="jlUpd()">
+        <span class="plbl2">i )</span>
+        <button class="abtn" id="jlAB" onclick="jlAnim()">▶ Animate</button>
+      </div>
+      <div class="presets" id="jlPre"></div>
+      <div class="prow">
+        <span class="plbl">Màu</span>
+        <div class="pb on" style="background:conic-gradient(#7c3aed,#db2777,#2563eb,#7c3aed)" onclick="jlPal(0,this)">
+        </div>
+        <div class="pb" style="background:conic-gradient(#0369a1,#06b6d4,#fbbf24,#0369a1)" onclick="jlPal(1,this)">
+        </div>
+        <div class="pb" style="background:conic-gradient(#92400e,#ef4444,#fef3c7,#92400e)" onclick="jlPal(2,this)">
+        </div>
+        <div class="pb" style="background:conic-gradient(#14532d,#16a34a,#bbf7d0,#14532d)" onclick="jlPal(3,this)">
+        </div>
+        <div class="pb" style="background:conic-gradient(#111,#666,#eee,#111)" onclick="jlPal(4,this)"></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
