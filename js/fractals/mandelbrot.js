@@ -1,4 +1,4 @@
-import { gl, prog, quad, PALS, MAX_ITERATIONS } from '../gl-utils.js';
+import { gl, prog, quad, PALS, MAX_ITERATIONS, fillViewport } from '../gl-utils.js';
 
 let mbG, mbP, mbZ = 1, mbX = -0.5, mbY = 0, mbPI = 0;
 let mbDrag = false, mbDX = 0, mbDY = 0;
@@ -8,7 +8,9 @@ function mbFS(pi) {
     return `precision highp float;
 uniform vec2 u_r;uniform float u_z;uniform vec2 u_o;
 void main(){
-  vec2 c=(gl_FragCoord.xy/u_r-0.5)*(3.0/u_z)+u_o;
+  vec2 uv = gl_FragCoord.xy / u_r - 0.5;
+  uv.x *= u_r.x / u_r.y;
+  vec2 c = uv * (3.0 / u_z) + u_o;
   vec2 z=c;int it=0;
   for(int i=0;i<${MAX_ITERATIONS};i++){if(dot(z,z)>4.0)break;z=vec2(z.x*z.x-z.y*z.y,2.0*z.x*z.y)+c;it++;}
   float t=float(it)/float(${MAX_ITERATIONS});
@@ -23,13 +25,15 @@ export function init() {
     build();
     render();
     const c = r.c;
+    
     c.addEventListener('wheel', e => {
         e.preventDefault();
         const f = e.deltaY < 0 ? 1.3 : .77;
         const rc = c.getBoundingClientRect();
         const mx = (e.clientX - rc.left) / c.clientWidth - .5;
         const my = (e.clientY - rc.top) / c.clientHeight - .5;
-        mbX += mx * (3 / mbZ) * (1 - 1 / f);
+        const aspect = c.clientWidth / c.clientHeight;
+        mbX += mx * aspect * (3 / mbZ) * (1 - 1 / f);
         mbY -= my * (3 / mbZ) * (1 - 1 / f);
         mbZ *= f;
         render();
@@ -50,7 +54,8 @@ export function init() {
     
     window.addEventListener('mousemove', e => {
         if (!mbDrag) return;
-        mbX -= (e.clientX - mbDX) * (3 / mbZ) / c.clientWidth;
+        const aspect = c.clientWidth / c.clientHeight;
+        mbX -= (e.clientX - mbDX) * aspect * (3 / mbZ) / c.clientWidth;
         mbY += (e.clientY - mbDY) * (3 / mbZ) / c.clientHeight;
         mbDX = e.clientX;
         mbDY = e.clientY;
@@ -64,8 +69,11 @@ export function init() {
         updateInfo();
     });
 
-    // Handle initial info
     updateInfo();
+
+    window.addEventListener('resize', () => {
+        if(document.getElementById('mandelbrot').classList.contains('on')) render();
+    });
 }
 
 function build() {
@@ -74,13 +82,12 @@ function build() {
 }
 
 function render() {
+    fillViewport(mbG);
     mbG.useProgram(mbP);
-    mbG.viewport(0, 0, mbG.canvas.width, mbG.canvas.height);
-    
     mbG.uniform2f(mbG.getUniformLocation(mbP, 'u_r'), mbG.canvas.width, mbG.canvas.height);
     mbG.uniform1f(mbG.getUniformLocation(mbP, 'u_z'), mbZ);
     mbG.uniform2f(mbG.getUniformLocation(mbP, 'u_o'), mbX, mbY);
-    mbG.drawArrays(mbG.TRIANGLES, 0, 6);
+    mbG.drawArrays(mbG.TRIANGLE_STRIP, 0, 4); 
 }
 
 function updateInfo() {
@@ -98,11 +105,12 @@ export function setPalette(i, btn) {
 }
 
 export function handleKey(e) {
+    const aspect = mbG.canvas.clientWidth / mbG.canvas.clientHeight;
     const s = 0.08 / mbZ;
     if (e.key === 'ArrowUp') mbY += s;
     if (e.key === 'ArrowDown') mbY -= s;
-    if (e.key === 'ArrowLeft') mbX -= s;
-    if (e.key === 'ArrowRight') mbX += s;
+    if (e.key === 'ArrowLeft') mbX -= s * aspect;
+    if (e.key === 'ArrowRight') mbX += s * aspect;
     if (e.key === '+' || e.key === '=') mbZ *= 1.3;
     if (e.key === '-') mbZ /= 1.3;
     render();

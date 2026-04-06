@@ -16,7 +16,7 @@ window.go = (id) => {
     document.getElementById('backBtn').classList.add('show');
     currentFractal = id;
     window.scrollTo(0, 0);
-    
+
     if (!inited[id]) {
         inited[id] = true;
         const initFn = {
@@ -35,12 +35,12 @@ window.goHome = () => {
     document.getElementById('home').style.display = '';
     document.querySelectorAll('.fp').forEach(p => p.classList.remove('on'));
     document.getElementById('backBtn').classList.remove('show');
-    
+
     // Stop Julia animation if running
     if (currentFractal === 'julia' && jl.isAnimating()) {
         jl.toggleAnimation();
     }
-    
+
     currentFractal = 'home';
 };
 

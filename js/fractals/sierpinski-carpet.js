@@ -1,4 +1,4 @@
-import { gl, prog, vbo } from '../gl-utils.js';
+import { gl, prog, vbo, fixViewportAndAspect } from '../gl-utils.js';
 
 let scG, scP, scLv = 0, scV = [];
 
@@ -9,12 +9,15 @@ export function init() {
     scP = prog(scG, `precision mediump float;void main(){gl_FragColor=vec4(0.85,0.55,0.05,1.0);}`);
     scG.clearColor(.98, .98, .97, 1);
     draw(0);
+
+    window.addEventListener('resize', () => {
+        if(document.getElementById('sierpC').classList.contains('on')) draw(scLv);
+    });
 }
 
 function scGen(x, y, s, d) {
     if (!d) {
         const x2 = x + s, y2 = y - s;
-        // Vẽ 2 tam giác để tạo thành 1 ô vuông
         scV.push(
             x, y,   x2, y,  x, y2,
             x, y2,  x2, y,  x2, y2
@@ -34,7 +37,7 @@ function draw(lv) {
     scV = [];
     scGen(-0.68, 0.68, 1.36, lv);
     
-    scG.viewport(0, 0, scG.canvas.width, scG.canvas.height);
+    fixViewportAndAspect(scG);
     scG.clear(scG.COLOR_BUFFER_BIT);
     
     vbo(scG, scP, scV);

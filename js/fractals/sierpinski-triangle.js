@@ -1,4 +1,4 @@
-import { gl, prog, vbo } from '../gl-utils.js';
+import { gl, prog, vbo, fixViewportAndAspect } from '../gl-utils.js';
 
 let stG, stP, stLv = 0, stV = [];
 
@@ -9,6 +9,10 @@ export function init() {
     stP = prog(stG, `precision mediump float;void main(){gl_FragColor=vec4(0.93,0.29,0.49,1.0);}`);
     stG.clearColor(.98, .98, .97, 1);
     draw(0);
+
+    window.addEventListener('resize', () => {
+        if(document.getElementById('sierpT').classList.contains('on')) draw(stLv);
+    });
 }
 
 function stGen(a, b, c, d) {
@@ -26,9 +30,9 @@ function stGen(a, b, c, d) {
 
 function draw(lv) {
     stV = [];
-    stGen([-0.68, -0.56], [0.68, -0.56], [0, 0.68], lv);
+    stGen([-0.7, -0.6], [0.7, -0.6], [0, 0.6124], lv);
     
-    stG.viewport(0, 0, stG.canvas.width, stG.canvas.height);
+    fixViewportAndAspect(stG); 
     stG.clear(stG.COLOR_BUFFER_BIT);
     
     vbo(stG, stP, stV);

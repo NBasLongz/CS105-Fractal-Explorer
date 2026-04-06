@@ -1,4 +1,4 @@
-import { gl, prog, vbo } from '../gl-utils.js';
+import { gl, prog, vbo, fixViewportAndAspect } from '../gl-utils.js';
 
 let vkG, vkP, vkLv = 0, vkV = [];
 
@@ -9,11 +9,15 @@ export function init() {
     vkP = prog(vkG, `precision mediump float;void main(){gl_FragColor=vec4(0.17,0.49,0.96,1.0);}`);
     vkG.clearColor(.98, .98, .97, 1);
     draw(0);
+
+    window.addEventListener('resize', () => {
+        if(document.getElementById('vankoch').classList.contains('on')) draw(vkLv);
+    });
 }
 
 function vkSeg(a, b, d) {
     if (!d) {
-        vkV.push(...a, ...b);
+        vkV.push(...a);
         return;
     }
     const ax = (2 * a[0] + b[0]) / 3, ay = (2 * a[1] + b[1]) / 3;
@@ -21,6 +25,7 @@ function vkSeg(a, b, d) {
     const ang = -Math.PI / 3;
     const cx = (bx - ax) * Math.cos(ang) - (by - ay) * Math.sin(ang) + ax;
     const cy = (bx - ax) * Math.sin(ang) + (by - ay) * Math.cos(ang) + ay;
+    
     vkSeg(a, [ax, ay], d - 1);
     vkSeg([ax, ay], [cx, cy], d - 1);
     vkSeg([cx, cy], [bx, by], d - 1);
@@ -29,16 +34,16 @@ function vkSeg(a, b, d) {
 
 function draw(lv) {
     vkV = [];
-    vkSeg([-0.72, -0.44], [0.72, -0.44], lv);
-    vkSeg([0.72, -0.44], [0, 0.68], lv);
-    vkSeg([0, 0.68], [-0.72, -0.44], lv);
+    vkSeg([-0.6, -0.3464], [0.6, -0.3464], lv); 
+    vkSeg([0.6, -0.3464], [0, 0.6928], lv);
+    vkSeg([0, 0.6928], [-0.6, -0.3464], lv);
     
-    vkG.viewport(0, 0, vkG.canvas.width, vkG.canvas.height);
+    fixViewportAndAspect(vkG);
     vkG.clear(vkG.COLOR_BUFFER_BIT);
     
     vbo(vkG, vkP, vkV);
-    vkG.drawArrays(vkG.LINES, 0, vkV.length / 2);
-    document.getElementById('vkB').textContent = (vkV.length / 4).toLocaleString() + ' segments';
+    vkG.drawArrays(vkG.LINE_LOOP, 0, vkV.length / 2);
+    document.getElementById('vkB').textContent = (vkV.length / 2).toLocaleString() + ' segments';
 }
 
 export function changeLevel(d) {

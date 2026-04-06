@@ -1,4 +1,4 @@
-import { gl, prog, quad, PALS, MAX_ITERATIONS } from '../gl-utils.js';
+import { gl, prog, quad, PALS, MAX_ITERATIONS, fillViewport } from '../gl-utils.js';
 
 let jlG, jlP, jlRe = -0.7269, jlIm = 0.1889, jlPI = 0;
 let jlAn = false, jlAF = null, jlAg = 0.6;
@@ -19,7 +19,10 @@ function jlFS(pi) {
     return `precision highp float;
 uniform vec2 u_r;uniform vec2 u_c;
 void main(){
-  vec2 z=(gl_FragCoord.xy/u_r-.5)*3.2;int it=0;
+  vec2 uv = gl_FragCoord.xy / u_r - 0.5;
+  uv.x *= u_r.x / u_r.y;
+  vec2 z = uv * 3.2;
+  int it=0;
   for(int i=0;i<${MAX_ITERATIONS};i++){if(dot(z,z)>4.0)break;z=vec2(z.x*z.x-z.y*z.y,2.0*z.x*z.y)+u_c;it++;}
   float t=float(it)/float(${MAX_ITERATIONS});
   gl_FragColor=vec4(.5+.5*cos(${r.toFixed(1)}+t*${f.toFixed(1)}),.5+.5*cos(${gv.toFixed(1)}+t*${f.toFixed(1)}),.5+.5*cos(${b.toFixed(1)}+t*${f.toFixed(1)}),1.);
@@ -34,7 +37,7 @@ export function init() {
     render();
     
     const row = document.getElementById('jlPre');
-    row.innerHTML = ''; // Clear existing
+    row.innerHTML = '';
     JL.forEach((p, i) => {
         const b = document.createElement('button');
         b.className = 'pset' + (i === 0 ? ' on' : '');
@@ -49,6 +52,10 @@ export function init() {
         };
         row.appendChild(b);
     });
+
+    window.addEventListener('resize', () => {
+        if(document.getElementById('julia').classList.contains('on')) render();
+    });
 }
 
 function build() {
@@ -57,12 +64,11 @@ function build() {
 }
 
 function render() {
+    fillViewport(jlG);
     jlG.useProgram(jlP);
-    jlG.viewport(0, 0, jlG.canvas.width, jlG.canvas.height);
-    
     jlG.uniform2f(jlG.getUniformLocation(jlP, 'u_r'), jlG.canvas.width, jlG.canvas.height);
     jlG.uniform2f(jlG.getUniformLocation(jlP, 'u_c'), jlRe, jlIm);
-    jlG.drawArrays(jlG.TRIANGLES, 0, 6);
+    jlG.drawArrays(jlG.TRIANGLE_STRIP, 0, 4);
 }
 
 export function update() {

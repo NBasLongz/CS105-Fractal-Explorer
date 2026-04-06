@@ -10,34 +10,59 @@ export function gl(id) {
     return g ? { g, c } : null;
 }
 
+// CHỐNG GIẬT LAG 1: Chỉ cập nhật kích thước khi thực sự có thay đổi
+export function fixViewportAndAspect(g) {
+    const c = g.canvas;
+    const cw = c.clientWidth;
+    const ch = c.clientHeight;
+    if (c.width !== cw || c.height !== ch) {
+        c.width = cw;
+        c.height = ch;
+    }
+    const size = Math.min(c.width, c.height);
+    const x = (c.width - size) / 2;
+    const y = (c.height - size) / 2;
+    g.viewport(x, y, size, size);
+}
+
+// CHỐNG GIẬT LAG 2: Dành cho Mandelbrot và Julia
+export function fillViewport(g) {
+    const c = g.canvas;
+    const cw = c.clientWidth;
+    const ch = c.clientHeight;
+    if (c.width !== cw || c.height !== ch) {
+        c.width = cw;
+        c.height = ch;
+    }
+    g.viewport(0, 0, c.width, c.height);
+}
+
 export function prog(g, fs) {
     const v = g.createShader(g.VERTEX_SHADER);
     g.shaderSource(v, VS);
     g.compileShader(v);
-    
+
     const f = g.createShader(g.FRAGMENT_SHADER);
     g.shaderSource(f, fs);
     g.compileShader(f);
-    
+
     const pr = g.createProgram();
     g.attachShader(pr, v);
     g.attachShader(pr, f);
     g.linkProgram(pr);
     g.useProgram(pr);
-    
-    // Đảm bảo viewport khớp với kích thước canvas thực tế
-    g.viewport(0, 0, g.canvas.width, g.canvas.height);
-    
     return pr;
 }
 
+// CHỐNG VRAM LEAK: Chỉ tạo Buffer 1 lần, sau đó tái sử dụng
 export function quad(g, pr) {
-    const b = g.createBuffer();
-    g.bindBuffer(g.ARRAY_BUFFER, b);
-    // Tọa độ 2 tam giác tạo thành hình vuông bao phủ toàn màn hình [-1, 1]
+    if (!g._quadBuffer) g._quadBuffer = g.createBuffer(); // <- Điểm mấu chốt
+    g.bindBuffer(g.ARRAY_BUFFER, g._quadBuffer);
     const pts = new Float32Array([
-        -1, -1,  1, -1, -1,  1,
-        -1,  1,  1, -1,  1,  1
+        -1,  1,
+        -1, -1,
+         1,  1,
+         1, -1
     ]);
     g.bufferData(g.ARRAY_BUFFER, pts, g.STATIC_DRAW);
     const a = g.getAttribLocation(pr, 'p');
@@ -45,9 +70,10 @@ export function quad(g, pr) {
     g.enableVertexAttribArray(a);
 }
 
+// CHỐNG VRAM LEAK: Khóa rò rỉ bộ nhớ cho CPU Fractals
 export function vbo(g, pr, arr) {
-    const b = g.createBuffer();
-    g.bindBuffer(g.ARRAY_BUFFER, b);
+    if (!g._vboBuffer) g._vboBuffer = g.createBuffer(); // <- Điểm mấu chốt
+    g.bindBuffer(g.ARRAY_BUFFER, g._vboBuffer);
     g.bufferData(g.ARRAY_BUFFER, new Float32Array(arr), g.STATIC_DRAW);
     const a = g.getAttribLocation(pr, 'p');
     if (a !== -1) {
@@ -57,11 +83,6 @@ export function vbo(g, pr, arr) {
 }
 
 export const PALS = [
-    [3, 2, 1, 12],
-    [3, 5, 7, 10],
-    [1, 2.5, 4.5, 10],
-    [5, 3, 1, 10],
-    [0, 0, 0, 8]
+    [3, 2, 1, 12], [3, 5, 7, 10], [1, 2.5, 4.5, 10], [5, 3, 1, 10], [0, 0, 0, 8]
 ];
-
 export const MAX_ITERATIONS = 500;

@@ -1,4 +1,4 @@
-import { gl, prog, vbo } from '../gl-utils.js';
+import { gl, prog, vbo, fixViewportAndAspect } from '../gl-utils.js';
 
 let mkG, mkP, mkLv = 0, mkV = [];
 
@@ -9,11 +9,15 @@ export function init() {
     mkP = prog(mkG, `precision mediump float;void main(){gl_FragColor=vec4(0.47,0.18,0.96,1.0);}`);
     mkG.clearColor(.98, .98, .97, 1);
     draw(0);
+
+    window.addEventListener('resize', () => {
+        if(document.getElementById('minkowski').classList.contains('on')) draw(mkLv);
+    });
 }
 
 function mkSeg(a, b, d) {
     if (!d) {
-        mkV.push(...a, ...b);
+        mkV.push(...a);
         return;
     }
     const dx = b[0] - a[0], dy = b[1] - a[1];
@@ -34,12 +38,12 @@ function draw(lv) {
     const pts = [[-0.55, 0.55], [0.55, 0.55], [0.55, -0.55], [-0.55, -0.55]];
     for (let i = 0; i < 4; i++) mkSeg(pts[i], pts[(i + 1) % 4], lv);
     
-    mkG.viewport(0, 0, mkG.canvas.width, mkG.canvas.height);
+    fixViewportAndAspect(mkG);
     mkG.clear(mkG.COLOR_BUFFER_BIT);
     
     vbo(mkG, mkP, mkV);
-    mkG.drawArrays(mkG.LINE_STRIP, 0, mkV.length / 2);
-    document.getElementById('mkB').textContent = (mkV.length / 4).toLocaleString() + ' segments';
+    mkG.drawArrays(mkG.LINE_LOOP, 0, mkV.length / 2);
+    document.getElementById('mkB').textContent = (mkV.length / 2).toLocaleString() + ' segments';
 }
 
 export function changeLevel(d) {
