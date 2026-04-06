@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.uit.edu.vn/" title="University of Information Technology">
-    <img src="https://i.imgur.com/WmMnSRt.png" alt="University of Information Technology (UIT)" width="400">
+    <img src="https://i.imgur.com/WmMnSRt.png" alt="University of Information Technology (UIT)" width="700">
   </a>
 </p>
 
@@ -9,7 +9,7 @@
 ## Student Information
 
 | Student ID | Full Name | GitHub | Email |
-|:----------:|------------------|-----------------------------------------|------------------------|
+|:--------------:|----------------------|---------------------------------------------|----------------------------|
 | 23520880 | Nguyen Ba Long | [NBasLongz](https://github.com/NBasLongz) | 23520880@gm.uit.edu.vn |
 | 23520036 | Cap Kim Hai Anh | | 23520036@gm.uit.edu.vn |
 
