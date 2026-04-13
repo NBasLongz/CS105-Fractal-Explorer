@@ -102,6 +102,19 @@ Tập Julia với hằng số c tùy chỉnh — tính toán toàn bộ trên **
 
 ---
 
+## Quick Run (Clone + Download)
+
+1. `git clone https://github.com/NBasLongz/CS105-Fractal-Explorer.git`
+2. Download [FractalExplorer-portable.zip](RELEASE_URL)
+3. Unzip
+4. Double-click `Fractal Explorer.exe`
+
+> Nếu bạn dùng release ZIP thì chỉ cần giải nén và chạy file EXE.
+
+> **Ghi chú:** `RELEASE_URL` là link tới GitHub Release hoặc Google Drive của bạn.
+
+---
+
 ## Cách chạy
 
 > **Lưu ý:** Dự án dùng ES Modules nên **bắt buộc** chạy qua local server.
@@ -120,8 +133,9 @@ Mở `http://localhost:8000` trong trình duyệt.
 ---
 **Cách 3 — Release file .exe:**
 
-- Đi đến ``` Demo/Fractal Explorer-win32-x64 ``` rồi nhấn file ```Fractal Explorer.exe``` để mở giao diện.
-- Hoặc chạy lệnh ``` Start-Process -FilePath "Demo\Fractal Explorer-win32-x64\Fractal Explorer.exe" ``` trong *Terminal*
+- Unzip `FractalExplorer-portable.zip`.
+- Mở `Demo/Fractal Explorer-win32-x64/Fractal Explorer.exe`.
+- Hoặc chạy lệnh `Start-Process -FilePath "Demo\Fractal Explorer-win32-x64\Fractal Explorer.exe"` trong PowerShell.
 
 ---
 
