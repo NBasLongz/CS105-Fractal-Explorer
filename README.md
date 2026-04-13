@@ -4,85 +4,117 @@
   </a>
 </p>
 
-<h1 align="center"><b>CS105 - Computer Graphics</b></h1>
+<h1 align="center"><b>CS105 - Computer Graphics — Fractal Explorer</b></h1>
 
-## Student Information
+## Thành viên nhóm
 
-| Student ID | Full Name | GitHub | Email |
-|:--------------:|----------------------|---------------------------------------------|----------------------------|
-| 23520880 | Nguyen Ba Long | [NBasLongz](https://github.com/NBasLongz) | 23520880@gm.uit.edu.vn |
-| 23520036 | Cap Kim Hai Anh | | 23520036@gm.uit.edu.vn |
-
----
-
-# Fractal Explorer — CS105 🌀
-
-![WebGL](https://img.shields.io/badge/WebGL-Fractal_Explorer-1d4ed8?style=for-the-badge&logo=webgl&logoColor=white)
-![Course](https://img.shields.io/badge/Course-CS105_Computer_Graphics-orange?style=for-the-badge)
-
-This project is part of the **CS105: Computer Graphics** course. It focuses on showing and exploring the world of mathematical Fractals using the power of WebGL.
+| MSSV | Họ và tên | GitHub | Email |
+|:----:|-----------|--------|-------|
+| 23520880 | Nguyễn Bá Long | [NBasLongz](https://github.com/NBasLongz) | 23520880@gm.uit.edu.vn |
+| 23520036 | Cáp Kim Hải Anh | — | 23520036@gm.uit.edu.vn |
 
 ---
 
-## Main Features
+## Giới thiệu
 
-This web app allows you to explore 6 classic Fractal models with an easy-to-use interface:
+Dự án trực quan hóa **6 mô hình fractal kinh điển** bằng WebGL, phục vụ môn học **CS105 - Đồ họa máy tính**. Giao diện được chia thành 4 khu vực thám hiểm riêng biệt, mỗi khu vực có trang độc lập với đầy đủ điều khiển tương tác.
 
-1.  **Von Koch Snowflake**: A geometric shape made by repeating simple steps on the CPU. It shows a very long border in a small area.
-2.  **Minkowski Island**: A square-based fractal curve that becomes more complex at each level.
-3.  **Sierpinski Triangle**: A famous triangle made of many smaller triangles that look exactly like the big one.
-4.  **Sierpinski Carpet**: A square fractal created by repeating a 3x3 pattern many times.
-5.  **Mandelbrot Set**: The most popular fractal. You can zoom in deeply and move around smoothly using the power of your GPU.
-6.  **Julia Set**: Explore many different shapes of the Julia set. It includes 8 presets and an "Animate" mode for cool effects.
+---
 
-## Technologies Used
-
-The project is organized into shared modules and made to run fast:
-
--   **Core**: HTML5 and Vanilla JavaScript (using ES Modules).
--   **Graphics**: WebGL (GLSL Shaders) to calculate many pixels at the same time on the GPU.
--   **Styling**: Vanilla CSS with a responsive design that works well on different screen sizes.
--   **Fonts**: Google Fonts (DM Sans and DM Mono).
-
-## Project Organization
-
-The project files are separated to make them easy to manage and update:
+## Cấu trúc thư mục
 
 ```text
 Fractal/
-├── index.html          # Main page and app structure
-├── README.md           # This document
+├── index.html                  # Trang chủ — menu điều hướng chính
+├── README.md                   # File này
 ├── css/
-│   └── style.css       # All styles and colors
-└── js/
-    ├── main.js         # Main script to control the app
-    ├── gl-utils.js     # Shared tools for WebGL
-    └── fractals/       # Logic for each specific Fractal
-        ├── von-koch.js
-        ├── minkowski.js
-        ├── sierpinski-triangle.js
-        ├── sierpinski-carpet.js
-        ├── mandelbrot.js
-        └── julia.js
+│   └── style.css               # CSS dùng chung cho toàn bộ dự án
+│
+├── vankoch/                    # 01 — Von Koch Snowflake
+│   ├── index.html              # Giao diện + điều khiển
+│   ├── main.js                 # Logic đệ quy tạo bông tuyết
+│   └── gl-utils.js             # Tiện ích WebGL
+│
+├── minkowski/                  # 02 — Minkowski Island
+│   ├── index.html
+│   ├── main.js                 # Logic đệ quy tạo đảo Minkowski
+│   └── gl-utils.js
+│
+├── sierpinski/                 # 03 — Sierpinski Systems
+│   ├── index.html              # Tab chuyển đổi Triangle ↔ Carpet
+│   ├── main.js                 # Logic đệ quy cho cả Triangle và Carpet
+│   └── gl-utils.js
+│
+└── mandelbrot-julia/           # 04 — Complex Sets
+    ├── index.html              # Tab chuyển đổi Mandelbrot ↔ Julia
+    ├── main.js                 # GPU Shader: 4 mode Mandelbrot + 3 mode Julia
+    └── gl-utils.js
 ```
 
-## How to Install and Run
+---
 
-Because this project uses **ES Modules**, you need to run it through a local web server (not just by double-clicking the file).
+## Nội dung từng khu vực
 
-1.  **Download the project:**
-    ```bash
-    git clone https://github.com/PHTLing/CS105.Fractal.git
-    cd CS105.Fractal
-    ```
+### 01 · Von Koch Snowflake (`vankoch/`)
+- Vẽ bông tuyết đệ quy bằng **CPU geometry** + WebGL LINE_LOOP.
+- Level 0–12, Level 12 tạo ~3 triệu đoạn thẳng.
+- Công thức: mỗi cạnh được chia thành 4 đoạn mới theo góc 60°.
 
-2.  **Run the app:**
-    -   **Option 1**: If you use **VS Code**, install the **Live Server** extension. Then, right-click `index.html` and choose *Open with Live Server*.
-    -   **Option 2**: Use Python if you have it installed: `python -m http.server 8000` and go to `http://localhost:8000` in your browser.
+### 02 · Minkowski Island (`minkowski/`)
+- Đường cong fractal hình vuông — mỗi đoạn biến thành 8 đoạn nhỏ hơn.
+- Level 0–7, sử dụng **CPU geometry** + WebGL LINE_LOOP.
+- Chiều dài đường cong tăng 8× mỗi bước.
 
-## License
+### 03 · Sierpinski Systems (`sierpinski/`)
+- **Triangle** (Tam giác Sierpinski): Level 0–10, dùng TRIANGLES. Mỗi level có 3ⁿ tam giác.
+- **Carpet** (Thảm Sierpinski): Level 0–8, dùng TRIANGLES. Mỗi level có 8ⁿ ô vuông.
+- Hai chế độ chuyển đổi bằng **tab** trên cùng trang.
 
-This project was created for education at the University of Information Technology (UIT).
+### 04 · Mandelbrot & Julia Set (`mandelbrot-julia/`)
+- **Mandelbrot**: 4 chế độ hiển thị — Basic, Smooth Coloring, Iterations (Anim), Party (Anim).
+  - Hỗ trợ scroll zoom, kéo pan, phím mũi tên.
+  - 5 bảng màu tùy chọn (Basic mode).
+- **Julia Set**: 3 chế độ — Classic, Smooth Coloring, Animated Trip.
+  - 8 preset hằng số c nổi tiếng.
+  - Chế độ Animate tự động xoay c theo quỹ đạo.
+- Toàn bộ tính toán chạy trên **GPU** qua GLSL Fragment Shader.
 
 ---
-© 2024 Fractal Explorer Project — CS105 Computer Graphics
+
+## Công nghệ sử dụng
+
+| Công nghệ | Vai trò |
+|-----------|---------|
+| **WebGL 1.0** | Render đồ họa trực tiếp trên GPU |
+| **GLSL (Fragment Shader)** | Tính toán fractal phức theo từng pixel |
+| **JavaScript ES Modules** | Tổ chức code theo module |
+| **HTML5 / CSS3** | Giao diện và điều khiển |
+
+---
+
+## Cách chạy
+
+> **Lưu ý:** Dự án dùng ES Modules, cần chạy qua **local server** — không thể mở thẳng file HTML bằng trình duyệt.
+
+**Cách 1 — VS Code Live Server (khuyến nghị):**
+1. Cài extension **Live Server** trong VS Code.
+2. Chuột phải vào `index.html` → **Open with Live Server**.
+
+**Cách 2 — Python HTTP Server:**
+```bash
+cd Fractal/
+python -m http.server 8000
+```
+Sau đó mở `http://localhost:8000` trong trình duyệt.
+
+---
+
+## Điều hướng
+
+- Từ **trang chủ** (`index.html`): click vào card bất kỳ để vào khu vực đó.
+- Trong mỗi trang con: nút **← Trang chủ** ở góc trên bên phải để quay lại.
+- Trang **Sierpinski** và **Mandelbrot & Julia**: dùng tab ở đầu trang để chuyển đổi giữa hai fractal.
+
+---
+
+*© 2026 — CS105 Fractal Explorer — Đại học Công nghệ Thông tin (UIT)*

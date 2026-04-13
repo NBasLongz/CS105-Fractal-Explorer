@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Von Koch Snowflake — CS105</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="module" src="./main.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 12 12"><polyline points="1,6 3,3 5,6 7,3 9,6 11,3" /></svg>
+      </div>
+      Fractal Explorer
+    </div>
+    <div class="topbar-div"></div>
+    <div class="topbar-pill">CS105 · WebGL</div>
+    <button class="back-btn show" onclick="window.location.href='../index.html'">← Trang chủ</button>
+  </header>
+
+  <div class="fp on" id="vankoch">
+    <div class="fp-inner">
+      <div class="pg-kicker">01 / 04 · CPU Geometry</div>
+      <h2 class="pg-h">Von Koch Snowflake</h2>
+      <p class="pg-sub">Chu vi vô hạn — diện tích hữu hạn<br>Mỗi level nhân 4× số đoạn thẳng</p>
+      <div class="cw">
+        <canvas id="vkC"></canvas>
+        <div class="c-badge" id="vkB">0 segments</div>
+      </div>
+      <div class="ctrl">
+        <button class="cbtn" onclick="vkCh(-1)">−</button>
+        <div class="clvl">
+          <div class="clvl-n" id="vkL">0</div>
+          <div class="clvl-l">Level / 12</div>
+        </div>
+        <button class="cbtn" onclick="vkCh(1)">+</button>
+      </div>
+      <div class="hint">Level 12 → ~3M đoạn · giảm nếu chậm</div>
+    </div>
+  </div>
+</body>
+</html>
