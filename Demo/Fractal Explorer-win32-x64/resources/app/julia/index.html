@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Julia Set — CS105</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="module" src="./main.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 12 12"><polyline points="1,6 3,3 5,6 7,3 9,6 11,3" /></svg>
+      </div>
+      Fractal Explorer
+    </div>
+    <div class="topbar-div"></div>
+    <div class="topbar-pill">CS105 · WebGL</div>
+    <button class="back-btn show" onclick="window.location.href='../index.html'">← Trang chủ</button>
+  </header>
+
+  <div class="fp on" id="julia">
+    <div class="fp-inner">
+      <div class="pg-kicker">06 / 06 · GPU Shader · Đa hiệu ứng</div>
+      <h2 class="pg-h">Julia Set</h2>
+      <p class="pg-sub">Điều chỉnh hằng số c để thám hiểm không gian fractal</p>
+      <div class="cw"><canvas id="jlC"></canvas></div>
+
+      <div class="presets" id="jlModes" style="margin-top:16px;margin-bottom:8px;"></div>
+
+      <div class="prow2" id="jlCtrlRow">
+        <span class="plbl2">c = (</span>
+        <input class="pinput" type="number" id="jlRe" value="-0.7269" step="0.001" oninput="jlUpd()">
+        <span class="plbl2">+</span>
+        <input class="pinput" type="number" id="jlIm" value="0.1889" step="0.001" oninput="jlUpd()">
+        <span class="plbl2">i )</span>
+        <button class="abtn" id="jlAB" onclick="jlAnim()">▶ Animate</button>
+      </div>
+
+      <div class="presets" id="jlPre"></div>
+
+      <div class="prow" id="jlPalRow">
+        <span class="plbl">Màu (Basic)</span>
+        <div class="pb on" style="background:conic-gradient(#7c3aed,#db2777,#2563eb,#7c3aed)" onclick="jlPal(0,this)"></div>
+        <div class="pb" style="background:conic-gradient(#0369a1,#06b6d4,#fbbf24,#0369a1)" onclick="jlPal(1,this)"></div>
+        <div class="pb" style="background:conic-gradient(#92400e,#ef4444,#fef3c7,#92400e)" onclick="jlPal(2,this)"></div>
+        <div class="pb" style="background:conic-gradient(#14532d,#16a34a,#bbf7d0,#14532d)" onclick="jlPal(3,this)"></div>
+        <div class="pb" style="background:conic-gradient(#111,#666,#eee,#111)" onclick="jlPal(4,this)"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

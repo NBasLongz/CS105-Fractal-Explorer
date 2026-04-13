@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minkowski Island — CS105</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="module" src="./main.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 12 12"><polyline points="1,6 3,3 5,6 7,3 9,6 11,3" /></svg>
+      </div>
+      Fractal Explorer
+    </div>
+    <div class="topbar-div"></div>
+    <div class="topbar-pill">CS105 · WebGL</div>
+    <button class="back-btn show" onclick="window.location.href='../index.html'">← Trang chủ</button>
+  </header>
+
+  <div class="fp on">
+    <div class="fp-inner">
+      <div class="pg-kicker">02 / 06 · CPU Geometry</div>
+      <h2 class="pg-h">Minkowski Island</h2>
+      <p class="pg-sub">Mỗi đoạn thành 8 — chiều dài tăng 8× mỗi bước</p>
+      <div class="cw">
+        <canvas id="mkC"></canvas>
+        <div class="c-badge" id="mkB">0 segments</div>
+      </div>
+      <div class="ctrl">
+        <button class="cbtn" onclick="mkCh(-1)">−</button>
+        <div class="clvl">
+          <div class="clvl-n" id="mkL">0</div>
+          <div class="clvl-l">Level / 7</div>
+        </div>
+        <button class="cbtn" onclick="mkCh(1)">+</button>
+      </div>
+      <div class="hint">Level 5+ cần vài giây để render</div>
+    </div>
+  </div>
+</body>
+</html>
