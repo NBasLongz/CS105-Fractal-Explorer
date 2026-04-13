@@ -10,7 +10,7 @@
 
 | MSSV | Họ và tên | GitHub | Email |
 |:----:|-----------|--------|-------|
-| 23520880 | Nguyễn Bá Long | [NBasLongz](https://github.com/NBasLongz) | 23520880@gm.uit.edu.vn |
+| 23520880
 | 23520036 | Cáp Kim Hải Anh | — | 23520036@gm.uit.edu.vn |
 
 ---
@@ -116,6 +116,12 @@ cd Fractal/
 python -m http.server 8000
 ```
 Mở `http://localhost:8000` trong trình duyệt.
+
+---
+**Cách 3 — Release file .exe:**
+
+- Đi đến ``` Demo/Fractal Explorer-win32-x64 ``` rồi nhấn file ```Fractal Explorer.exe``` để mở giao diện.
+- Hoặc chạy lệnh ``` Start-Process -FilePath "Demo\Fractal Explorer-win32-x64\Fractal Explorer.exe" ``` trong *Terminal*
 
 ---
 

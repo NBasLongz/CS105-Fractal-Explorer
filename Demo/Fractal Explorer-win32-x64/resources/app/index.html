@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fractal Explorer — CS105 WebGL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 12 12"><polyline points="1,6 3,3 5,6 7,3 9,6 11,3" /></svg>
+      </div>
+      Fractal Explorer
+    </div>
+    <div class="topbar-div"></div>
+    <div class="topbar-pill">CS105 · WebGL</div>
+  </header>
+
+  <div id="home">
+    <div class="home-kicker">CS105 · Đồ Họa Máy Tính · Tiểu Luận Fractal</div>
+    <h1 class="home-h1">Trực quan hóa<br>Fractal với <mark>WebGL</mark></h1>
+    <p class="home-lead">6 mô hình fractal kinh điển — từ hình học CPU đệ quy đến GPU shader đa hiệu ứng mượt mà.</p>
+
+    <div class="grid">
+      <div class="card" onclick="window.location.href='vankoch/index.html'">
+        <div class="card-top">
+          <div class="card-icon ic-b">❄️</div>
+          <div class="card-badge">01 / 06</div>
+        </div>
+        <div class="card-h">Von Koch Snowflake</div>
+        <div class="card-p">Bông tuyết đệ quy — mỗi cạnh được chia thành 4 đoạn mới. Chu vi vô hạn, diện tích hữu hạn.</div>
+        <div class="card-foot"><div class="card-spec">Level 0–12 · CPU</div><div class="card-cta">→</div></div>
+      </div>
+
+      <div class="card" onclick="window.location.href='minkowski/index.html'">
+        <div class="card-top">
+          <div class="card-icon ic-p">🏝️</div>
+          <div class="card-badge">02 / 06</div>
+        </div>
+        <div class="card-h">Minkowski Island</div>
+        <div class="card-p">Đường cong biên giới fractal hình vuông — mỗi đoạn biến thành 8 đoạn nhỏ hơn.</div>
+        <div class="card-foot"><div class="card-spec">Level 0–7 · CPU</div><div class="card-cta">→</div></div>
+      </div>
+
+      <div class="card" onclick="window.location.href='sierpinski-triangle/index.html'">
+        <div class="card-top">
+          <div class="card-icon ic-r">🔺</div>
+          <div class="card-badge">03 / 06</div>
+        </div>
+        <div class="card-h">Sierpinski Triangle</div>
+        <div class="card-p">Tam giác fractal tự tương đồng — bỏ tam giác giữa, đệ quy trên 3 tam giác góc.</div>
+        <div class="card-foot"><div class="card-spec">Level 0–10 · CPU</div><div class="card-cta">→</div></div>
+      </div>
+
+      <div class="card" onclick="window.location.href='sierpinski-carpet/index.html'">
+        <div class="card-top">
+          <div class="card-icon ic-y">🟫</div>
+          <div class="card-badge">04 / 06</div>
+        </div>
+        <div class="card-h">Sierpinski Carpet</div>
+        <div class="card-p">Hình vuông fractal — chia 3×3, xóa trung tâm, đệ quy trên 8 ô còn lại.</div>
+        <div class="card-foot"><div class="card-spec">Level 0–8 · CPU</div><div class="card-cta">→</div></div>
+      </div>
+
+      <div class="card" onclick="window.location.href='mandelbrot/index.html'">
+        <div class="card-top">
+          <div class="card-icon ic-g">🌀</div>
+          <div class="card-badge">05 / 06</div>
+        </div>
+        <div class="card-h">Mandelbrot Set</div>
+        <div class="card-p">Tập hợp phức nổi tiếng nhất. Zoom sâu bằng scroll — Tích hợp đa hiệu ứng Smooth &amp; Party.</div>
+        <div class="card-foot"><div class="card-spec">Đa Hiệu Ứng · GPU Shader</div><div class="card-cta">→</div></div>
+      </div>
+
+      <div class="card" onclick="window.location.href='julia/index.html'">
+        <div class="card-top">
+          <div class="card-icon ic-o">🎨</div>
+          <div class="card-badge">06 / 06</div>
+        </div>
+        <div class="card-h">Julia Set</div>
+        <div class="card-p">Tập Julia với hằng số c tùy chỉnh — Tích hợp Shader chuyến đi Animated ảo giác.</div>
+        <div class="card-foot"><div class="card-spec">Đa Hiệu Ứng · GPU Shader</div><div class="card-cta">→</div></div>
+      </div>
+    </div>
+
+    <div class="home-rule">
+      <div class="home-rule-l">Đồ Họa Máy Tính — Tiểu Luận Fractal</div>
+      <div class="members">
+        <div class="mbr"><b>Nguyễn Bá Long</b> · 23520880</div>
+        <div class="mbr"><b>Cáp Kim Hải Anh</b> · 23520036</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
