@@ -16,7 +16,7 @@
 
 ## Giới thiệu
 
-Dự án trực quan hóa **6 mô hình fractal kinh điển** bằng WebGL, phục vụ môn học **CS105 - Đồ họa máy tính**. Mỗi mô hình được tổ chức thành một thư mục riêng biệt, hoàn toàn độc lập và tự chứa.
+Dự án trực quan hóa **6 mô hình fractal kinh điển** bằng WebGL, phục vụ môn học **CS105 - Đồ họa máy tính**. 
 
 ---
 
